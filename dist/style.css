@@ -1,0 +1,16 @@
+.index__main___2nGBg {
+	width: 100%;
+	height: 100%;
+}.App__pane___22iwm {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-image: -webkit-linear-gradient(315deg, #fff, #000);
+  background-image: linear-gradient(135deg, #fff, #000);
+}.TouchArea__area___3KuZD {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}

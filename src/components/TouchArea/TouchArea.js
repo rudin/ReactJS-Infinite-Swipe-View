@@ -1,6 +1,7 @@
 import css from './TouchArea.css';
 
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 export default class TouchArea extends Component {
   
@@ -28,7 +29,7 @@ export default class TouchArea extends Component {
   handleTouchMove(event) {
     event.preventDefault();
     if (typeof this.state.startPosition !== 'number') return;
-    const el = React.findDOMNode(this);
+    const el = ReactDOM.findDOMNode(this);
     const currentPosition = this.calculatePointerPosition(event);
     const offset = currentPosition - this.state.startPosition;
     this.setState({
@@ -46,21 +47,21 @@ export default class TouchArea extends Component {
 
   calculatePointerPosition(event) {
     event = event.type.indexOf('touch') === 0 ? event.changedTouches[0] : event;
-    const el = React.findDOMNode(this);
+    const el = ReactDOM.findDOMNode(this);
     const rect = el.getBoundingClientRect();
     const pos = event.clientX - rect.left;
     return pos;
   }
 
   componentDidMount() {
-    const el = React.findDOMNode(this);
+    const el = ReactDOM.findDOMNode(this);
     el.addEventListener('touchstart', this.handleTouchStart, false);
     el.addEventListener('touchmove', this.handleTouchMove, false);
     el.addEventListener('touchend', this.handleTouchEnd, false);
   }
 
   componentWillUnmount() {
-    const el = React.findDOMNode(this);
+    const el = ReactDOM.findDOMNode(this);
     el.removeEventListener('touchstart', this.handleTouchStart, false);
     el.removeEventListener('touchmove', this.handleTouchMove, false);
     el.removeEventListener('touchend', this.handleTouchEnd, false);

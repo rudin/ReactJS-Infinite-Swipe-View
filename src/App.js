@@ -3,9 +3,43 @@ import ReactDOM from 'react-dom'
 import { Motion, spring } from 'react-motion'
 
 import { DraggableCore } from 'react-draggable'
-import styled from 'styled-components'
+import styled, { injectGlobal } from 'styled-components'
+const div = styled.div
 
-const Pane = styled.div`
+injectGlobal`
+  html, body, #root {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    overflow: hidden;
+  }
+  #root {
+    position: fixed;
+  }
+  html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+  }
+`
+
+const Container = div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+`
+
+const Panes = Container
+
+const Pane = div`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -107,7 +141,7 @@ export default class App extends Component {
     return itemsToRender.map((item, i) => {
       const text = `item: ${item}, position: ${Math.round(position*10)/10}, firstItemToRender: ${firstItemToRender}, i: ${i}`
       return (
-        <div className={css.pane} key={i+firstItemToRender} style={{WebkitTransform: 'translateX('+-100*((position-firstItemToRender)-i)+'%)'}}>{text}</div>
+        <Pane key={i+firstItemToRender} style={{WebkitTransform: 'translateX('+-100*((position-firstItemToRender)-i)+'%)'}}>{text}</Pane>
       )
     })
 
@@ -121,17 +155,17 @@ export default class App extends Component {
 
     return (
         <DraggableCore onStart={(e, ui) => this.handleStart(e, ui)} onDrag={(e, ui) => this.handleDrag(e, ui)} onStop={(e, ui) => this.handleStop(e, ui)}>
-          <div style={{position: 'absolute', left:0, right:0, top:0, bottom: 0, overflow: 'hidden'}}>
+          <Container>
             <Motion defaultStyle={{x: 0}} style={{x: spring(position, springConfig)}}>
     
               { interpolated =>
-                <div className={css.app} style={{position: 'absolute', left:0, right:0, top:0, bottom: 0, overflow: 'hidden'}}>
+                <Panes>
                   { this.GetPanes(interpolated.x) }
-                </div>
+                </Panes>
               }
     
             </Motion>
-          </div>
+          </Container>
         </DraggableCore> 
     )
   }

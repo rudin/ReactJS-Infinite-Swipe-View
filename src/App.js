@@ -132,7 +132,7 @@ export default class App extends Component {
 
     let firstItemToRender = Math.floor(position)
 
-    let itemsToRender = items.filter((item, i) => (i == firstItemToRender || i == firstItemToRender+1))
+    let itemsToRender = items.filter((item, i) => (i === firstItemToRender || i === firstItemToRender+1))
 
     if (position < 0) {
       firstItemToRender = 0
